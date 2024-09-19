@@ -11,8 +11,9 @@ public class authServiceImplementation implements AuthService {
     private final UserRepository userRepository;
     private final jwtService jwtService;
 
-    public authServiceImplementation(UserRepository userRepository) {
+    public authServiceImplementation(UserRepository userRepository, jwtService jwtService) {
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
 
     }
 
