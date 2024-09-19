@@ -4,7 +4,11 @@ import com.example.authservice_proyecto2.Repository.UserRepository;
 import com.example.authservice_proyecto2.Service.AuthService;
 import com.example.authservice_proyecto2.Service.jwtService;
 import com.example.authservice_proyecto2.common.dtos.TokenResponse;
+import com.example.authservice_proyecto2.common.dtos.userRequest;
+import com.example.authservice_proyecto2.common.entities.userModel;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 
@@ -18,9 +22,22 @@ public class authServiceImplementation implements AuthService {
 
 
     }
-
     @Override
-    public TokenResponse createUser(String email, String password) {
-        return null;
+    public TokenResponse createUser(userRequest userrequest) {
+        return Optional.of(userrequest).map(this::maptoEntity).map(userRepository::save).
+                map(userCreated -> jwtservice.generateToken(userCreated.getId()))
+                .orElseThrow(() -> new RuntimeException("Error creating user"));
     }
+
+ 
+
+
+    private userModel maptoEntity(userRequest userrequest) {
+        return userModel.builder()
+                .email(userrequest.getEmail())
+                .password(userrequest.getPassword())
+                .build();
+    }
+
+
 }
