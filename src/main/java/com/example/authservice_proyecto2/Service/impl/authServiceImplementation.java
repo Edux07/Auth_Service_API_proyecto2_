@@ -36,6 +36,7 @@ public class authServiceImplementation implements AuthService {
         return userModel.builder()
                 .email(userrequest.getEmail())
                 .password(userrequest.getPassword())
+                .role("USER")
                 .build();
     }
 
