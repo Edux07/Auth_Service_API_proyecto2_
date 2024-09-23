@@ -3,6 +3,7 @@ package com.example.authservice_proyecto2.config;
 import com.example.authservice_proyecto2.Service.impl.UserDetailsServiceimpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -25,7 +27,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public securityFiltreChain securityFiltreChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFiltreChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults()).
@@ -38,6 +40,7 @@ public class SecurityConfig {
 
     }
 
+
     @Bean
 public AuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -49,10 +52,15 @@ public AuthenticationProvider authenticationProvider() {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    public AuthAutenticationManager authAutenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return new AuthAutenticationManager(authenticationConfiguration.getAuthenticationManager());
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration
+                .getAuthenticationManager();
     }
+
+
+
 
 
 }
