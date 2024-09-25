@@ -6,6 +6,7 @@ import com.example.authservice_proyecto2.Service.jwtService;
 import com.example.authservice_proyecto2.common.dtos.TokenResponse;
 import com.example.authservice_proyecto2.common.dtos.userRequest;
 import com.example.authservice_proyecto2.common.entities.userModel;
+import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -41,4 +42,23 @@ public class authServiceImplementation implements AuthService {
     }
 
 
+    @Override
+    public TokenResponse generateToken(Long userID) {
+        return null;
+    }
+
+    @Override
+    public Claims getClaims(String token) {
+        return null;
+    }
+
+    @Override
+    public boolean isExpired(String token) {
+        return false;
+    }
+
+    @Override
+    public Integer extractUserId(String token) {
+        return null;
+    }
 }
