@@ -6,6 +6,7 @@ import io.jsonwebtoken.Claims;
 
 public interface AuthService {
     TokenResponse createUser(userRequest userrequest);
+    TokenResponse loginUser(userRequest userrequest);
 
     TokenResponse generateToken(Long userID);
 

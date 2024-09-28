@@ -33,7 +33,7 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
-                .authorizeRequests(request -> request.requestMatchers("v1/**")
+                .authorizeRequests(request -> request.requestMatchers("/v1/auth/register", "/v1/auth/login")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
+
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

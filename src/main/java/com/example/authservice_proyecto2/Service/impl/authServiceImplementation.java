@@ -7,6 +7,8 @@ import com.example.authservice_proyecto2.common.dtos.TokenResponse;
 import com.example.authservice_proyecto2.common.dtos.userRequest;
 import com.example.authservice_proyecto2.common.entities.userModel;
 import io.jsonwebtoken.Claims;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,7 +32,17 @@ public class authServiceImplementation implements AuthService {
                 .orElseThrow(() -> new RuntimeException("Error creating user"));
     }
 
- 
+    @Override
+    public TokenResponse loginUser(userRequest userrequest) {
+        userModel user = userRepository.findByEmail(userrequest.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        if (user.getPassword().equals(userrequest.getPassword())) {
+            return jwtservice.generateToken(user.getId());
+        }else {
+            throw new BadCredentialsException("Invalid credentials");
+        }
+
+    }
 
 
     private userModel maptoEntity(userRequest userrequest) {

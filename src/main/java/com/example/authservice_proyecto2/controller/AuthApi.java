@@ -16,6 +16,9 @@ public interface AuthApi {
     @PostMapping("/register")
     ResponseEntity<TokenResponse>Createuser(@RequestBody @Valid userRequest userrequest);
 
+    @PostMapping("/login")
+    ResponseEntity<TokenResponse> loginUser(@RequestBody @Valid userRequest userrequest);
+
 
 
 }
